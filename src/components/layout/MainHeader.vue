@@ -2,9 +2,6 @@
   <div class="main-header">
     <header class="clearfix">
       <a href="" class="logo">市民健康管理系统</a>
-      <div class="collapse-btn" @click="changeCollapse">
-        <i class="el-icon-menu"></i>
-      </div>
       <ul class="nav nav-bar clearfix">
         <li>
           <i class="el-icon-bell"></i>
@@ -40,9 +37,6 @@ export default {
     }
   },
   methods: {
-    changeCollapse() {
-
-    },
     logout() {
 
     }
@@ -68,18 +62,6 @@ export default {
     letter-spacing: 1px;
     text-align: center;
     background-color: #367fa9;
-  }
-  .collapse-btn {
-    height: 50px;
-    line-height: 50px;
-    display: block;
-    float: left;
-    padding: 0 10px;
-    color: #ffffff;
-    cursor: pointer;
-  }
-  .collapse-btn:hover {
-    background-color:  #367fa9;
   }
   ul.nav {
     float: right;

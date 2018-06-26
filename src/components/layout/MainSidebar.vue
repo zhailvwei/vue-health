@@ -1,26 +1,36 @@
 <template>
   <div class="main-sidebar">
-    <aside v-for="(item, index) in menuItems" :key="index">
-      <div :class="[{open: index === currentIndex}, 'menu-item']" @click="handleMenuChange(index)">
-        <i :class="item.icon"></i>
-        {{item.title}}
-        <i class="el-icon-arrow-right" v-if="item.sub"></i>
-      </div>
-      <transition name="fade">
-        <ul
-          class="sub-item"
-          v-show="index === currentIndex" 
-        >
-          <li
-            v-for="(subItem, subIndex) in item.sub"
-            :key="subIndex" :class="{select: index === currentIndex && subIndex === subCurrentIndex}"
-            @click="handleSubMenuChange(subIndex)"
+    <aside>
+      <div class="title">管理员操作</div>
+      <div class="menu" v-for="(item, index) in menuItems" :key="index">
+        <div :class="[{open: index === currentIndex}, 'menu-item']" @click="handleMenuChange(index)">
+          <i :class="item.icon"></i>
+          {{item.title}}
+          <i class="el-icon-arrow-right" v-if="item.sub"></i>
+        </div>
+        <transition name="fade">
+          <ul
+            class="sub-item"
+            v-show="index === currentIndex" 
           >
-            <i class="iconfont icon-circle"></i>
-            {{subItem.title}}
-          </li>
-        </ul>
-      </transition>
+            <li
+              v-for="(subItem, subIndex) in item.sub"
+              :key="subIndex" :class="{select: index === currentIndex && subIndex === subCurrentIndex}"
+              @click="handleSubMenuChange(subIndex)"
+            >
+              <i class="iconfont icon-circle"></i>
+              {{subItem.title}}
+            </li>
+          </ul>
+        </transition>
+      </div>
+      <div class="title">统计报表</div>
+      <div class="menu" v-for="(item, index) in chartItems" :key="index+100">
+        <div :class="[{open: index === currentChartIndex}, 'menu-item']" @click="handleChartChange(index)">
+          <i :class="item.icon" :style="{color: item.color}"></i>
+          {{item.title}}
+        </div>
+      </div>
     </aside>
   </div>
 </template>
@@ -29,8 +39,10 @@
 export default {
   data() {
     return {
+      searchKeyword: '',
       currentIndex: 0,
-      subCurrentIndex: 0,
+      subCurrentIndex: 10086,
+      currentChartIndex: 10010,
       menuItems: [
         {
           'title': '用户管理',
@@ -51,11 +63,11 @@ export default {
           'icon': 'iconfont icon-shouye9',
           'sub': [
             {
-              'title': '入驻电商列表',
+              'title': '医药电商列表',
               'path': ''
             },
             {
-              'title': '电商入驻',
+              'title': '医药电商入驻',
               'path': ''
             }
           ]
@@ -84,11 +96,42 @@ export default {
         },
         {
           'title': '系统设置',
-          'icon': 'el-icon-setting'
+          'icon': 'el-icon-setting',
+          'sub': [
+            {
+              'title': '管理员账户管理',
+              'path': ''
+            },
+            {
+              'title': '',
+              'path': ''
+            },
+            {
+              'title': '药品追溯',
+              'path': ''
+            }
+          ]
         },
         {
           'title': '在线客服',
           'icon': 'el-icon-service'
+        },
+      ],
+      chartItems: [
+        {
+          'title': '平台收支状况',
+          'icon': 'iconfont icon-areachart',
+          'color': '#00a65a'
+        },
+        {
+          'title': '用户注册统计',
+          'icon': 'iconfont icon-linechart',
+          'color': '#f39c12'
+        },
+        {
+          'title': '医药电商入驻统计',
+          'icon': 'iconfont icon-barchart',
+          'color': '#00c0ef'
         },
       ]
     }
@@ -96,10 +139,16 @@ export default {
   methods: {
     handleMenuChange(index) {
       this.currentIndex = index;
-      this.subCurrentIndex = 0;
+      this.subCurrentIndex = 10086;
+      //this.currentChartIndex = 10086;
     },
-    handleSubMenuChange(subIndex) {
-      this.subCurrentIndex = subIndex;
+    handleMenuChange(index) {
+      this.currentIndex = index;
+      this.subCurrentIndex = 10086;
+    },
+    handleChartChange(chartIndex) {
+      this.currentIndex = 10086;
+      this.currentChartIndex = chartIndex;
     }
   }
 }
@@ -108,14 +157,17 @@ export default {
 <style scoped>
 .main-sidebar {
   width: 230px;
-  display: block;
   position: absolute;
   top: 50px;
   bottom: 0;
   left: 0;
   font-size: 14px;
-  /* overflow-y: scroll; */
   background-color: #222d32;
+}
+.main-sidebar .title {
+  padding: 10px 15px;
+  color: #4b646f;
+  background-color: #1a2226;
 }
 .main-sidebar .menu-item {
   padding: 15px;
@@ -139,6 +191,10 @@ export default {
   color: #ffffff;
   background-color: #1e282c;
 }
+.main-sidebar .menu-item:hover {
+  color: #ffffff;
+  background-color: #1e282c;
+}
 .main-sidebar .menu-item.open>.el-icon-arrow-right {
   -webkit-transform: rotate(90deg);
   -ms-transform: rotate(90deg);
@@ -154,6 +210,9 @@ export default {
 .main-sidebar .sub-item li {
   cursor: pointer;
   padding: 10px 0 10px 20px;
+}
+.main-sidebar .sub-item li:hover {
+  color: #ffffff;
 }
 .main-sidebar .sub-item li.select {
   color: #ffffff;
