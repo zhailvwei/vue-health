@@ -1,11 +1,9 @@
 <template>
-  <div class="wrapper">
+  <div class="container-box">
     <main-header></main-header>
     <main-sidebar></main-sidebar>
-    <div class="content-box">
-      <transition name="move" mode="out-in">
-        <router-view></router-view>
-      </transition>
+    <div class="content">
+      <router-view></router-view>
     </div>
   </div>
 </template>
@@ -23,10 +21,13 @@ export default {
 </script>
 
 <style scoped>
-.content-box {
+.content {
+  width: calc(100% - 290px);
+  padding: 30px;
   position: absolute;
   top: 50px;
-  left: 240px;
+  left: 230px;
   bottom: 0;
+  background-color: #f0f0f0;
 }
 </style>

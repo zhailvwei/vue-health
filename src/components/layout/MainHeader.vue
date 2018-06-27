@@ -16,7 +16,7 @@
           <img src="../../assets/images/user.jpg" alt="admin" />
         </li>
         <li>
-          <el-dropdown class="user-name" trigger="click">
+          <el-dropdown class="user-name" trigger="click" @command="handleCommand">
             <span class="el-dropdown-link">
               {{username}}<i class="el-icon-arrow-down el-icon--right"></i>
             </span>
@@ -24,7 +24,7 @@
               <el-dropdown-item>账号设置</el-dropdown-item>
               <el-dropdown-item>关于作者</el-dropdown-item>
               <el-dropdown-item>项目仓库</el-dropdown-item>
-              <el-dropdown-item divided @click="logout">退出登录</el-dropdown-item>
+              <el-dropdown-item divided command="logout">退出登录</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </li>
@@ -37,14 +37,18 @@ export default {
   name: 'main-header',
   data() {
     return {
-      username: "admin"
+      username: JSON.parse(localStorage.getItem('adminUsername'))
     }
   },
   methods: {
-    logout() {
-
-    }
-  }
+    handleCommand(command) {
+      if (command == 'logout') {
+        localStorage.removeItem('adminUsername');
+        localStorage.removeItem('loginInfo');
+        this.$router.push('/login');
+      }
+    },
+  },
 }
 </script>
 <style scoped>

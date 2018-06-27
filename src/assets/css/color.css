@@ -1,0 +1,21 @@
+.text-blue {
+  color: #00c0ef;
+}
+.text-green {
+  color: #00a65a;
+}
+.text-yellow {
+  color: #f39c12;
+}
+.text-gray {
+  color: #666666;
+}
+.bg-blue {
+  background-color: #00c0ef;
+}
+.bg-green {
+  background-color: #00a65a;
+}
+.bg-yellow {
+  background-color: #f39c12;
+}

@@ -13,7 +13,7 @@
             </template>
             <el-menu-item v-for="(subItem, subIndex) in item.sub" :key="subIndex.toString()" :index="subItem.index">{{subItem.title}}</el-menu-item>
           </el-submenu>
-          <el-menu-item v-else :index="index.toString()">
+          <el-menu-item v-else :index="item.index">
             <i :class="[item.icon, 'menu-icon']"></i>
             <span slot="title">{{item.title}}</span>
           </el-menu-item>
@@ -29,12 +29,10 @@ export default {
   data() {
     return {
       searchKeyword: '',
-      currentIndex: 0,
-      subCurrentIndex: 10086,
-      currentChartIndex: 10010,
       menuItems: [
         {
           'title': '市民健康',
+          'index': 'home',
           'icon': 'iconfont icon-shouye1'
         },
         {
@@ -44,12 +42,10 @@ export default {
             {
               'title': '用户列表',
               'index': 'user-list',
-              'path': ''
             },
             {
               'title': '添加用户',
               'index': 'user-add',
-              'path': ''
             }
           ]
         },
@@ -60,12 +56,10 @@ export default {
             {
               'title': '医药电商列表',
               'index': 'shop-list',
-              'path': ''
             },
             {
               'title': '医药电商入驻',
               'index': 'shop-add',
-              'path': ''
             }
           ]
         },
@@ -76,22 +70,20 @@ export default {
             {
               'title': '精贵药品查询',
               'index': 'drug-search',
-              'path': ''
             },
             {
               'title': '中草药查询',
               'index': 'herb-search',
-              'path': ''
             },
             {
               'title': '药品追溯',
               'index': 'drug-trace',
-              'path': ''
             }
           ]
         },
         {
           'title': '定点医疗机构',
+          'index': 'medical-insititution',
           'icon': 'iconfont icon-yiliao'
         },
         {
@@ -101,23 +93,21 @@ export default {
             {
               'title': '管理员账户管理',
               'index': 'admin-manage',
-              'path': ''
             },
             {
               'title': '用户反馈',
               'index': 'user-feedback',
-              'path': ''
             },
             {
               'title': '发布公告',
               'index': 'release-notice',
-              'path': ''
             }
           ]
         },
         {
           'title': '在线客服',
-          'icon': 'el-icon-service'
+          'index': 'custom-service',
+          'icon': 'iconfont icon-shouye36'
         },
       ],
       chartItems: [
@@ -140,6 +130,11 @@ export default {
     }
   },
   methods: {
+  },
+  computed: {
+    handleRoutes() {
+      return this.$route.path.replace('/','');
+    }
   }
 }
 </script>

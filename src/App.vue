@@ -1,25 +1,11 @@
 <template>
   <div id="app">
-    <main-header></main-header>
-    <main-sidebar></main-sidebar>
-    <content-box>
-      <router-view></router-view>
-    </content-box>
+    <router-view></router-view>
   </div>
 </template>
 
-<script>
-import ContentBox from './components/layout/ContentBox.vue';
-
-export default {
-  name: 'app',
-  components: {
-    ContentBox,
-  }
-}
-</script>
-
 <style>
+@import "~@/assets/css/color.css";
 @import "~@/assets/css/reset.css";
 @import "~@/assets/fonts/iconfont.css";
 
