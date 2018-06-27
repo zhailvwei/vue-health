@@ -1,36 +1,24 @@
 <template>
   <div class="main-sidebar">
     <aside>
-      <div class="title">管理员操作</div>
-      <div class="menu" v-for="(item, index) in menuItems" :key="index">
-        <div :class="[{open: index === currentIndex}, 'menu-item']" @click="handleMenuChange(index)">
-          <i :class="item.icon"></i>
-          {{item.title}}
-          <i class="el-icon-arrow-right" v-if="item.sub"></i>
+      <el-menu default-active="0" @open="handleOpen" @close="handleClose"
+        background-color="#222d32" text-color="#bfcbd9" active-text-color="#409eff"
+        unique-opened router
+      >
+        <div v-for="(item, index) in menuItems" :key="index.toString()">
+          <el-submenu v-if="item.sub" :index="index.toString()">
+            <template slot="title">
+              <i :class="[item.icon, 'menu-icon']"></i>
+              <span>{{item.title}}</span>
+            </template>
+            <el-menu-item v-for="(subItem, subIndex) in item.sub" :key="subIndex.toString()" :index="subItem.index">{{subItem.title}}</el-menu-item>
+          </el-submenu>
+          <el-menu-item v-else :index="index.toString()">
+            <i :class="[item.icon, 'menu-icon']"></i>
+            <span slot="title">{{item.title}}</span>
+          </el-menu-item>
         </div>
-        <transition name="fade">
-          <ul
-            class="sub-item"
-            v-show="index === currentIndex" 
-          >
-            <li
-              v-for="(subItem, subIndex) in item.sub"
-              :key="subIndex" :class="{select: index === currentIndex && subIndex === subCurrentIndex}"
-              @click="handleSubMenuChange(subIndex)"
-            >
-              <i class="iconfont icon-circle"></i>
-              {{subItem.title}}
-            </li>
-          </ul>
-        </transition>
-      </div>
-      <div class="title">统计报表</div>
-      <div class="menu" v-for="(item, index) in chartItems" :key="index+100">
-        <div :class="[{open: index === currentChartIndex}, 'menu-item']" @click="handleChartChange(index)">
-          <i :class="item.icon" :style="{color: item.color}"></i>
-          {{item.title}}
-        </div>
-      </div>
+      </el-menu> 
     </aside>
   </div>
 </template>
@@ -45,15 +33,21 @@ export default {
       currentChartIndex: 10010,
       menuItems: [
         {
+          'title': '市民健康',
+          'icon': 'iconfont icon-shouye1'
+        },
+        {
           'title': '用户管理',
           'icon': 'iconfont icon-shouye4',
           'sub': [
             {
               'title': '用户列表',
+              'index': 'user-list',
               'path': ''
             },
             {
               'title': '添加用户',
+              'index': 'user-add',
               'path': ''
             }
           ]
@@ -64,10 +58,12 @@ export default {
           'sub': [
             {
               'title': '医药电商列表',
+              'index': 'shop-list',
               'path': ''
             },
             {
               'title': '医药电商入驻',
+              'index': 'shop-add',
               'path': ''
             }
           ]
@@ -78,14 +74,17 @@ export default {
           'sub': [
             {
               'title': '精贵药品查询',
+              'index': 'drug-search',
               'path': ''
             },
             {
               'title': '中草药查询',
+              'index': 'herb-search',
               'path': ''
             },
             {
               'title': '药品追溯',
+              'index': 'drug-trace',
               'path': ''
             }
           ]
@@ -96,18 +95,21 @@ export default {
         },
         {
           'title': '系统设置',
-          'icon': 'el-icon-setting',
+          'icon': 'iconfont icon-shouye11',
           'sub': [
             {
               'title': '管理员账户管理',
+              'index': 'admin-manage',
               'path': ''
             },
             {
-              'title': '',
+              'title': '用户反馈',
+              'index': 'user-feedback',
               'path': ''
             },
             {
-              'title': '药品追溯',
+              'title': '发布公告',
+              'index': 'release-notice',
               'path': ''
             }
           ]
@@ -137,19 +139,12 @@ export default {
     }
   },
   methods: {
-    handleMenuChange(index) {
-      this.currentIndex = index;
-      this.subCurrentIndex = 10086;
-      //this.currentChartIndex = 10086;
+    handleOpen(key, keyPath) {
+      console.log(key, keyPath);
     },
-    handleMenuChange(index) {
-      this.currentIndex = index;
-      this.subCurrentIndex = 10086;
+    handleClose(key, keyPath) {
+      console.log(key, keyPath);
     },
-    handleChartChange(chartIndex) {
-      this.currentIndex = 10086;
-      this.currentChartIndex = chartIndex;
-    }
   }
 }
 </script>
@@ -164,68 +159,19 @@ export default {
   font-size: 14px;
   background-color: #222d32;
 }
-.main-sidebar .title {
-  padding: 10px 15px;
-  color: #4b646f;
-  background-color: #1a2226;
+.el-menu {
+  width: 230px;
 }
-.main-sidebar .menu-item {
-  padding: 15px;
-  color: #b8c7ce;
-  position: relative;
-  cursor: pointer;
-  border-left: 3px solid #222d32;
+.el-menu-item, .el-submenu__title {
+  height: 40px;
+  line-height: 40px;
+  padding: 0 15px;
 }
-.main-sidebar .menu-item i:first-child {
-  margin-right: 15px;
-  vertical-align: middle;
-}
-.main-sidebar .menu-item>.el-icon-arrow-right {
-  position: absolute;
-  top: 20px;
-  right: 15px;
-  font-size: 12px;
-}
-.main-sidebar .menu-item.open {
-  border-color: #3c8dbc;
-  color: #ffffff;
-  background-color: #1e282c;
-}
-.main-sidebar .menu-item:hover {
-  color: #ffffff;
-  background-color: #1e282c;
-}
-.main-sidebar .menu-item.open>.el-icon-arrow-right {
-  -webkit-transform: rotate(90deg);
-  -ms-transform: rotate(90deg);
-  transform: rotate(90deg);
-  transition: 0.3s;
-}
-.main-sidebar .sub-item {
-  font-size: 12px;
-  color: #b8c7ce;
-  overflow: hidden;
-  background-color: #2c3b41;
-}
-.main-sidebar .sub-item li {
-  cursor: pointer;
-  padding: 10px 0 10px 20px;
-}
-.main-sidebar .sub-item li:hover {
+.el-submenu[aria-expanded=true] .el-submenu__title {
   color: #ffffff;
 }
-.main-sidebar .sub-item li.select {
-  color: #ffffff;
-}
-.main-sidebar .sub-item li .iconfont {
-  margin-right: 10px;
-  vertical-align: middle;
-}
-.fade-enter-active, .fade-leave-active {
-  transition: all 0.3s;
-}
-.fade-enter, .fade-leave-to {
-  height: 0 !important;
+.main-sidebar .menu-icon {
+  padding-right: 15px;
 }
 </style>
 
