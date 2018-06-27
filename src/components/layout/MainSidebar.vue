@@ -1,7 +1,7 @@
 <template>
   <div class="main-sidebar">
     <aside>
-      <el-menu default-active="0" @open="handleOpen" @close="handleClose"
+      <el-menu default-active="0"
         background-color="#222d32" text-color="#bfcbd9" active-text-color="#409eff"
         unique-opened router
       >
@@ -25,6 +25,7 @@
 
 <script>
 export default {
+  name: 'main-sidebar',
   data() {
     return {
       searchKeyword: '',
@@ -139,12 +140,6 @@ export default {
     }
   },
   methods: {
-    handleOpen(key, keyPath) {
-      console.log(key, keyPath);
-    },
-    handleClose(key, keyPath) {
-      console.log(key, keyPath);
-    },
   }
 }
 </script>

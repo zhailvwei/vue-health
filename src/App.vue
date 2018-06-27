@@ -9,15 +9,11 @@
 </template>
 
 <script>
-import MainHeader from './components/layout/MainHeader.vue';
-import MainSidebar from './components/layout/MainSidebar.vue';
 import ContentBox from './components/layout/ContentBox.vue';
 
 export default {
   name: 'app',
   components: {
-    MainHeader,
-    MainSidebar,
     ContentBox,
   }
 }

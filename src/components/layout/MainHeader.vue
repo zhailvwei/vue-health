@@ -2,6 +2,9 @@
   <div class="main-header">
     <header class="clearfix">
       <a href="" class="logo">市民健康管理系统</a>
+      <div class="btn-collapse">
+        <i class="el-icon-menu"></i>
+      </div>
       <ul class="nav nav-bar clearfix">
         <li>
           <i class="el-icon-bell"></i>
@@ -31,6 +34,7 @@
 </template>
 <script>
 export default {
+  name: 'main-header',
   data() {
     return {
       username: "admin"
@@ -61,6 +65,17 @@ export default {
     color: #ffffff;
     letter-spacing: 1px;
     text-align: center;
+    background-color: #367fa9;
+  }
+  .btn-collapse {
+    height: 50px;
+    line-height: 50px;
+    padding: 0 10px;
+    color: #ffffff;
+    float: left;
+    cursor: pointer;
+  }
+  .btn-collapse:hover {
     background-color: #367fa9;
   }
   ul.nav {
