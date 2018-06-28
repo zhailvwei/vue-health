@@ -7,6 +7,7 @@
 <style>
 @import "~@/assets/css/color.css";
 @import "~@/assets/css/reset.css";
+@import "~@/assets/css/common.css";
 @import "~@/assets/fonts/iconfont.css";
 
 #app {
