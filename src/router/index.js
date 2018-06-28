@@ -26,12 +26,12 @@ export default new Router({
         {
           path: '/user-list',
           component: resolve => require(['../components/page/UserList.vue'], resolve),
-          meta: { title: '用户列表' }
+          meta: { title: '用户列表', menu: '用户管理'}
         },
         {
           path: '/user-add',
           component: resolve => require(['../components/page/UserAdd.vue'], resolve),
-          meta: { title: '添加用户' }
+          meta: { title: '添加用户', menu: '用户管理'}
         },
         {
           path: '/shop-list',

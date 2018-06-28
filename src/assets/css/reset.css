@@ -24,9 +24,3 @@ a {
 ul, li {
   list-style: none;
 }
-
-.clearfix::after {
-  display: block;
-  height: 0;
-  clear: both;
-}

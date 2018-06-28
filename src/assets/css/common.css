@@ -1,0 +1,44 @@
+/*** el-row ***/
+.el-row {
+  margin-bottom: 20px;
+}
+.el-row:last-child {
+  margin-bottom: 0;
+}
+
+/*** breadcrumb ***/
+.breadcrumb {
+  padding: 10px 15px;
+  border-radius: 5px;
+  background-color: #ffffff;
+}
+
+.breadcrumb .el-breadcrumb__item:last-child .el-breadcrumb__inner {
+  color: #409eff;
+}
+
+/*** content-box ***/
+.content-box {
+  padding: 10px;
+  background-color: #ffffff;
+}
+
+/*** list ***/
+.list .list-heading {
+  margin-bottom: 15px;
+}
+
+.list .list-footer {
+  padding: 10px 15px 0 15px;
+}
+
+.list .list-footer .el-pagination {
+  float: right;
+}
+
+/*** clearfix ***/
+.clearfix::after {
+  content: '';
+  display: block;
+  clear: both;
+}

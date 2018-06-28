@@ -174,12 +174,6 @@ export default {
 .home-page {
   font-size: 14px;
 }
-.el-row {
-  margin-bottom: 20px;
-}
-.el-row:last-child {
-  margin-bottom: 0;
-}
 .admin-profile {
   margin-bottom: 20px;
 }
