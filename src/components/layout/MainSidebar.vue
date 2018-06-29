@@ -1,25 +1,36 @@
 <template>
+
   <div class="main-sidebar">
-    <aside>
-      <el-menu default-active="0"
-        background-color="#222d32" text-color="#bfcbd9" active-text-color="#409eff"
-        unique-opened router
-      >
-        <div v-for="(item, index) in menuItems" :key="index.toString()">
-          <el-submenu v-if="item.sub" :index="index.toString()">
-            <template slot="title">
+    <happy-scroll color="rgba(255, 255, 255, 0.5)" hide-horizontal resize>
+      <aside>
+        <el-menu default-active="0"
+          background-color="#222d32" text-color="#bfcbd9" active-text-color="#409eff"
+          unique-opened router
+        >
+          <div class="menu-title">系统操作</div>
+          <div v-for="(item, index) in menuItems" :key="index.toString()">
+            <el-submenu v-if="item.sub" :index="index.toString()">
+              <template slot="title">
+                <i :class="[item.icon, 'menu-icon']"></i>
+                <span>{{item.title}}</span>
+              </template>
+              <el-menu-item v-for="(subItem, subIndex) in item.sub" :key="subIndex.toString()" :index="subItem.index">{{subItem.title}}</el-menu-item>
+            </el-submenu>
+            <el-menu-item v-else :index="item.index">
               <i :class="[item.icon, 'menu-icon']"></i>
-              <span>{{item.title}}</span>
-            </template>
-            <el-menu-item v-for="(subItem, subIndex) in item.sub" :key="subIndex.toString()" :index="subItem.index">{{subItem.title}}</el-menu-item>
-          </el-submenu>
-          <el-menu-item v-else :index="item.index">
-            <i :class="[item.icon, 'menu-icon']"></i>
-            <span slot="title">{{item.title}}</span>
-          </el-menu-item>
-        </div>
-      </el-menu> 
-    </aside>
+              <span slot="title">{{item.title}}</span>
+            </el-menu-item>
+          </div>
+          <div class="menu-title">统计信息</div>
+          <div v-for="(item, index) in chartItems" :key="index+10">
+            <el-menu-item :index="item.index">
+              <i :class="[item.icon, 'menu-icon']" :style="{color: item.color}"></i>
+              <span slot="title">{{item.title}}</span>
+            </el-menu-item>
+          </div>
+        </el-menu> 
+      </aside>
+    </happy-scroll>
   </div>
 </template>
 
@@ -113,16 +124,19 @@ export default {
       chartItems: [
         {
           'title': '平台收支状况',
+          'index': 'platform-finance',
           'icon': 'iconfont icon-areachart',
           'color': '#00a65a'
         },
         {
           'title': '用户注册统计',
+          'index': 'user-statistics',
           'icon': 'iconfont icon-linechart',
           'color': '#f39c12'
         },
         {
           'title': '医药电商入驻统计',
+          'index': 'shop-statistics',
           'icon': 'iconfont icon-barchart',
           'color': '#00c0ef'
         },
@@ -147,6 +161,7 @@ export default {
   bottom: 0;
   left: 0;
   font-size: 14px;
+  overflow: hidden;
   background-color: #222d32;
 }
 .el-menu {
@@ -162,6 +177,13 @@ export default {
 }
 .main-sidebar .menu-icon {
   padding-right: 15px;
+}
+.main-sidebar .menu-title {
+  height: 40px;
+  line-height: 40px;
+  padding-left: 20px;
+  color: #4b646f;
+  background-color: #1a2226;
 }
 </style>
 

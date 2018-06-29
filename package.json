@@ -12,6 +12,7 @@
     "element-ui": "^2.4.0",
     "html2canvas": "^1.0.0-alpha.12",
     "vue": "^2.5.16",
+    "vue-happy-scroll": "^2.0.1",
     "vue-router": "^3.0.1",
     "vue-schart": "^1.0.0",
     "webpack": "^4.10.2"

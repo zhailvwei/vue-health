@@ -3,9 +3,7 @@
     <main-header></main-header>
     <main-sidebar></main-sidebar>
     <div class="content">
-      <transition name="move" mode="out-in">
-        <router-view></router-view>
-      </transition>
+      <router-view></router-view>
     </div>
   </div>
 </template>
@@ -30,6 +28,8 @@ export default {
   top: 50px;
   left: 230px;
   bottom: 0;
+  overflow-x: hidden;
+  overflow-y: scroll;
   background-color: #f0f0f0;
 }
 </style>
