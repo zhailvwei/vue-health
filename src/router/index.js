@@ -36,27 +36,27 @@ export default new Router({
         {
           path: '/shop-list',
           component: resolve => require(['../components/page/ShopList.vue'], resolve),
-          meta: { title: '医药电商列表' }
+          meta: { title: '医药电商列表', menu: '医药电商管理' }
         },
         {
           path: '/shop-add',
           component: resolve => require(['../components/page/ShopAdd.vue'], resolve),
-          meta: { title: '医药电商入驻' }
+          meta: { title: '医药电商入驻', menu: '医药电商管理' }
         },
         {
           path: '/drug-search',
           component: resolve => require(['../components/page/DrugSearch.vue'], resolve),
-          meta: { title: '精贵药品查询' }
+          meta: { title: '精贵药品查询', menu: '医疗药品管理' }
         },
         {
           path: '/herb-search',
           component: resolve => require(['../components/page/HerbSearch.vue'], resolve),
-          meta: { title: '中草药查询' }
+          meta: { title: '中草药查询', menu: '医疗药品管理' }
         },
         {
           path: '/drug-trace',
           component: resolve => require(['../components/page/DrugTrace.vue'], resolve),
-          meta: { title: '药品追溯' }
+          meta: { title: '药品追溯', menu: '医疗药品管理' }
         },
         {
           path: '/medical-insititution',
@@ -66,17 +66,17 @@ export default new Router({
         {
           path: '/admin-manage',
           component: resolve => require(['../components/page/AdminManage.vue'], resolve),
-          meta: { title: '管理员账户管理' }
+          meta: { title: '管理员账户管理', menu: '系统设置' }
         },
         {
           path: '/user-feedback',
           component: resolve => require(['../components/page/UserFeedback.vue'], resolve),
-          meta: { title: '用户反馈' }
+          meta: { title: '用户反馈', menu: '系统设置' }
         },
         {
           path: '/release-notice',
           component: resolve => require(['../components/page/ReleaseNotice.vue'], resolve),
-          meta: { title: '发布公告' }
+          meta: { title: '发布公告', menu: '系统设置' }
         },
         {
           path: '/custom-service',
@@ -89,15 +89,16 @@ export default new Router({
           meta: { title: '平台收支状况' }
         },
         {
-          path: '/user-statistics',
-          component: resolve => require(['../components/page/UserStatistics.vue'], resolve),
-          meta: { title: '用户注册统计' }
+          path: '/user-message',
+          component: resolve => require(['../components/page/UserMessage.vue'], resolve),
+          meta: { title: '用户消息' }
         },
         {
-          path: '/shop-statistics',
-          component: resolve => require(['../components/page/ShopStatistics.vue'], resolve),
-          meta: { title: '医药电商入驻统计' }
+          path: '/shop-message',
+          component: resolve => require(['../components/page/ShopMessage.vue'], resolve),
+          meta: { title: '电商消息' }
         },
+        
       ]
     },
   ]

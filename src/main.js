@@ -6,7 +6,7 @@ import HappyScroll from 'vue-happy-scroll';
 import 'vue-happy-scroll/docs/happy-scroll.css';
 import 'element-ui/lib/theme-chalk/index.css';
 
-Vue.use(ElementUI);
+Vue.use(ElementUI, {size: 'small'});
 Vue.use(HappyScroll);
 Vue.config.productionTip = false;
 

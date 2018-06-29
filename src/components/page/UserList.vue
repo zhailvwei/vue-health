@@ -12,12 +12,14 @@
         <div class="list-heading">
           <el-row>
             <el-col :span="15">
-              <el-button icon="el-icon-plus" size="small">添加</el-button>
-              <el-button icon="el-icon-delete" size="small" disabled>删除</el-button>
-              <el-button icon="el-icon-refresh" size="small">刷新</el-button>
+              <router-link to="/user-add">
+                <el-button class="btn-add" icon="el-icon-plus">添加</el-button>
+              </router-link>
+              <el-button icon="el-icon-delete" disabled>删除</el-button>
+              <el-button icon="el-icon-refresh">刷新</el-button>
             </el-col>
             <el-col :span="9">
-              <el-input placeholder="请输入搜索关键词" v-model="keyword" class="input-with-select" size="small">
+              <el-input placeholder="请输入搜索关键词" v-model="keyword" class="input-with-select">
                 <el-select v-model="select" slot="prepend" placeholder="请选择" style="width: 100px;">
                   <el-option label="用户名" value="1"></el-option>
                   <el-option label="性别" value="2"></el-option>
@@ -84,15 +86,17 @@ export default {
 
     },
     handleSizeChange() {
-      //console.log(`每页 ${val} 条`);
+      
     },
     handleCurrentChange() {
-      //console.log(`当前页: ${val}`);
+      
     }
   }
 }
 </script>
 
 <style scoped>
-
+.btn-add {
+  margin-right: 10px;
+}
 </style>

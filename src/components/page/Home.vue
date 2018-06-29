@@ -15,7 +15,7 @@
         </el-card>
         <el-card class="chart" shadow="hover">
           <div slot="header">近四个月用户访问量</div>
-          <schart :canvasId="canvasId" :type="type" :width="width" :height="height" :data="chartData" :options="options"></schart>
+          <schart :canvasId="canvasId" :type="type" style="width: 100%;height: 150px;" :data="chartData" :options="options"></schart>
         </el-card>
       </el-col>
       <el-col :span="16">
@@ -66,7 +66,7 @@
               <span>待办事项</span>
               <el-button @click="handleToDoListAdd" style="float: right; padding: 3px 0" type="text">添加</el-button>
             </div>
-            <el-table ref="multipleTable" :data="todoList" :show-header="false" style="width: 100%">
+            <el-table ref="multipleTable" :data="todoList" :show-header="false" style="width: 100%" size="medium">
               <el-table-column width="40">
                 <template slot-scope="scope">
                   <el-checkbox v-model="scope.row.status"></el-checkbox>
@@ -78,14 +78,14 @@
                     {{scope.row.title}}
                   </div>
                   <span v-if="scope.row.editStatus">
-                    <input class="cell-edit-input" type="text" v-model="scope.row.title" autofocus="autofocus"/>
+                    <input class="cell-edit-input" type="text" v-model="scope.row.title" autofocus />
                   </span>
                 </template>
               </el-table-column>
               <el-table-column width="80">
                 <template slot-scope="scope">
                   <i v-if="!scope.row.editStatus" @click="handleToDoListEdit(scope.row)" class="todo-item-action el-icon-edit"></i>
-                  <i v-if="scope.row.editStatus" @click="handleToDoListSave(scope.row)" class="todo-item-action el-icon-circle-check-outline"></i>
+                  <i v-if="scope.row.editStatus" @click="handleToDoListSave(scope.row, scope.$index, todoList)" class="todo-item-action el-icon-circle-check-outline"></i>
                   <i @click="handleToDoListDelete(scope.$index, todoList)" class="todo-item-action el-icon-delete"></i>
                 </template>
               </el-table-column>
@@ -109,8 +109,6 @@ export default {
       rule: '系统管理员',
       canvasId: 'chart',
       type: 'ring',
-      width: '100%',
-      height: 'auto',
       chartData: [
         {name: '3月', value: 1342},
         {name: '4月', value: 2123},
@@ -155,13 +153,22 @@ export default {
   },
   methods: {
     handleToDoListAdd() {
-
+      let newItem = {
+        title: '',
+        editStatus: true,
+        status: false
+      };
+      this.todoList.unshift(newItem);
     },
     handleToDoListEdit(row) {
       row.editStatus = true;
     },
-    handleToDoListSave(row) {
-      row.editStatus = false;
+    handleToDoListSave(row, index, rows) {
+      if (row.title == '') {
+        rows.splice(index, 1);
+      } else {
+        row.editStatus = false;
+      }
     },
     handleToDoListDelete(index, rows) {
       rows.splice(index, 1);

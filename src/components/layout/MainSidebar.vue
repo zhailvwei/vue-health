@@ -116,6 +116,20 @@ export default {
           ]
         },
         {
+          'title': '消息管理',
+          'icon': 'iconfont icon-shouye30',
+          'sub': [
+            {
+              'title': '用户消息',
+              'index': 'user-message',
+            },
+            {
+              'title': '电商消息',
+              'index': 'shop-message',
+            }
+          ]
+        },
+        {
           'title': '在线客服',
           'index': 'custom-service',
           'icon': 'iconfont icon-shouye36'
@@ -153,7 +167,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .main-sidebar {
   width: 230px;
   position: absolute;
@@ -164,16 +178,28 @@ export default {
   overflow: hidden;
   background-color: #222d32;
 }
-.el-menu {
+.main-sidebar .el-menu {
   width: 230px;
 }
-.el-menu-item, .el-submenu__title {
+.main-sidebar .el-submenu.is-opened .el-submenu__title {
+  border-color: #409eff;
+  color: #ffffff!important;
+  background-color: #1a2226!important;
+}
+.main-sidebar .el-menu-item {
   height: 40px;
   line-height: 40px;
-  padding: 0 15px;
 }
-.el-submenu[aria-expanded=true] .el-submenu__title {
-  color: #ffffff;
+.main-sidebar .el-submenu .el-submenu__title {
+  height: 40px;
+  line-height: 40px;
+  padding-left: 17px!important;
+  border-left: 3px solid #222d32;
+  transition: all 0.3s;
+}
+.main-sidebar .el-submenu .el-menu-item {
+  font-size: 12px;
+  padding-left: 50px!important;
 }
 .main-sidebar .menu-icon {
   padding-right: 15px;

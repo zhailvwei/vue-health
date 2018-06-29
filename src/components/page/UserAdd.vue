@@ -10,43 +10,43 @@
     <el-row>
       <div class="content-box">
         <el-row>
-          <el-col :span="12" :offset="2">
-            <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+          <el-col :span="11" :offset="2">
+            <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px">
               <el-form-item label="用户名" prop="username">
-                <el-input v-model="ruleForm.username" size="small"></el-input>
+                <el-input v-model="ruleForm.username" auto-complete="off"></el-input>
+              </el-form-item>
+              <el-form-item label="密码" prop="password">
+                <el-input type="password" v-model="ruleForm.password" auto-complete="off"></el-input>
+              </el-form-item>
+              <el-form-item label="确认密码" prop="rePassword">
+                <el-input type="password" v-model="ruleForm.rePassword" auto-complete="off"></el-input>
               </el-form-item>
               <el-form-item label="性别" prop="gender">
-                <el-select v-model="ruleForm.gender" placeholder="选择用户性别" size="small">
-                  <el-option label="男" value="male"></el-option>
-                  <el-option label="女" value="female"></el-option>
-                </el-select>
+                <el-radio-group v-model="ruleForm.gender">
+                  <el-radio label="男" name="gender"></el-radio>
+                  <el-radio label="女" name="gender"></el-radio>
+                </el-radio-group>
               </el-form-item>
               <el-form-item label="出生日期" required>
                 <el-col :span="12">
-                  <el-form-item prop="birthdate">
-                    <el-date-picker type="date" placeholder="选择用户出生日期" v-model="ruleForm.date1" style="width: 100%;" size="small"></el-date-picker>
+                  <el-form-item prop="birthdate" style="margin-bottom: 0;">
+                    <el-date-picker type="date" placeholder="选择用户出生日期" v-model="ruleForm.birthdate" style="width: 100%;"></el-date-picker>
                   </el-form-item>
                 </el-col>
               </el-form-item>
-              <el-form-item label="活动性质" prop="type">
-                <el-checkbox-group v-model="ruleForm.type">
-                  <el-checkbox label="美食/餐厅线上活动" name="type"></el-checkbox>
-                  <el-checkbox label="地推活动" name="type"></el-checkbox>
-                  <el-checkbox label="线下主题活动" name="type"></el-checkbox>
-                </el-checkbox-group>
+              <el-form-item label="联系方式" prop="mobile">
+                <el-input v-model="ruleForm.mobile" auto-complete="off"></el-input>
               </el-form-item>
-              <el-form-item label="特殊资源" prop="resource">
-                <el-radio-group v-model="ruleForm.resource">
-                  <el-radio label="线上品牌商赞助"></el-radio>
-                  <el-radio label="线下场地免费"></el-radio>
-                </el-radio-group>
+              <el-form-item label="E-mail" prop="email">
+                <el-input v-model="ruleForm.email" auto-complete="off"></el-input>
               </el-form-item>
               <el-form-item label="备注">
-                <el-input type="textarea" v-model="ruleForm.memo"></el-input>
+                <el-input type="textarea" v-model="ruleForm.memo" rows="5"></el-input>
               </el-form-item>
               <el-form-item>
                 <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
                 <el-button @click="resetForm('ruleForm')">重置</el-button>
+                <el-button @click="back()">返回</el-button>
               </el-form-item>
             </el-form>
           </el-col>
@@ -59,22 +59,47 @@
 <script>
 export default {
   data() {
+    var validatePassword = (rule, value, callback) => {
+      if (value !== '') {
+        if (this.ruleForm.rePassword !== '') {
+          this.$refs.ruleForm.validateField('rePassword');
+        }
+        callback();
+      }
+    };
+    var validateRePassword = (rule, value, callback) => {
+      if (value !== '' && value !== this.ruleForm.password) {
+        callback(new Error('两次输入密码不一致'));
+      } else {
+        callback();
+      }
+    };
     return {
       menu: '',
       title: '',
       ruleForm: {
         username: '',
+        password: '',
+        rePassword: '',
         gender: '',
         birthdate: '',
-        delivery: false,
-        type: [],
-        resource: '',
+        mobile: '',
+        email: '',
         memo: ''
       },
       rules: {
         username: [
           { required: true, message: '请输入新增用户用户名', trigger: 'blur' },
-          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+          { min: 4, max: 20, message: '长度在 4 到 20 个字符之间', trigger: 'blur' }
+        ],
+        password: [
+          { required: true, message: '请输入密码', trigger: 'blur' },
+          { min: 4, message: '长度不允许小于4', trigger: 'blur' },
+          { validator: validatePassword, trigger: 'blur' }
+        ],
+        rePassword: [
+          { required: true, message: '请再次输入密码', trigger: 'blur' },
+          { validator: validateRePassword, trigger: 'blur' }
         ],
         gender: [
           { required: true, message: '请选择用户性别', trigger: 'change' }
@@ -82,12 +107,14 @@ export default {
         birthdate: [
           { type: 'date', required: true, message: '请选择用户出生日期', trigger: 'change' }
         ],
-        type: [
-          { type: 'array', required: true, message: '请至少选择一个活动性质', trigger: 'change' }
+        mobile: [
+          { required: true, message: '请输入用户手机号', trigger: 'blur' },
+          { pattern: /^1[3-9]\d{9}$/, message: '手机号格式错误', trigger: 'blur' }
         ],
-        resource: [
-          { required: true, message: '请选择活动资源', trigger: 'change' }
-        ],
+        email: [
+          { required: true, message: '请输入用户邮箱', trigger: 'blur' },
+          { pattern: /^[^\s]+\.[^\s]$/, message: '邮箱格式错误', trigger: 'blur' }
+        ]
       }
     }
   },
@@ -101,13 +128,15 @@ export default {
         if (valid) {
           alert('submit!');
         } else {
-          console.log('error submit!!');
           return false;
         }
       });
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
+    },
+    back() {
+      this.$router.push('/user-list');
     }
   }
 }
