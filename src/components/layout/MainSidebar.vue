@@ -3,7 +3,7 @@
   <div class="main-sidebar">
     <happy-scroll color="rgba(255, 255, 255, 0.5)" hide-horizontal resize>
       <aside>
-        <el-menu default-active="0"
+        <el-menu :default-active="handleRoutes"
           background-color="#222d32" text-color="#bfcbd9" active-text-color="#409eff"
           unique-opened router
         >
