@@ -83,6 +83,21 @@ export default new Router({
           component: resolve => require(['../components/page/CustomService.vue'], resolve),
           meta: { title: '在线客服' }
         },
+        {
+          path: '/platform-finance',
+          component: resolve => require(['../components/page/PlatformFinance.vue'], resolve),
+          meta: { title: '平台收支状况' }
+        },
+        {
+          path: '/user-statistics',
+          component: resolve => require(['../components/page/UserStatistics.vue'], resolve),
+          meta: { title: '用户注册统计' }
+        },
+        {
+          path: '/shop-statistics',
+          component: resolve => require(['../components/page/ShopStatistics.vue'], resolve),
+          meta: { title: '医药电商入驻统计' }
+        },
       ]
     },
   ]
