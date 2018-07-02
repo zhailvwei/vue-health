@@ -69,10 +69,6 @@ export default {
               'index': 'seller-manage',
             },
             {
-              'title': '添加商家',
-              'index': 'seller-add',
-            },
-            {
               'title': '医药电商列表',
               'index': 'shop-list',
             },
@@ -169,7 +165,11 @@ export default {
   },
   computed: {
     handleRoutes() {
-      return this.$route.path.replace('/','');
+      if (this.$route.meta.activePath !== undefined) {
+        return this.$route.meta.activePath;
+      } else {
+        return this.$route.path.replace('/', '');
+      }
     }
   }
 }

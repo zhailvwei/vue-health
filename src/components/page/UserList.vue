@@ -16,7 +16,7 @@
                 <el-button class="btn-add" icon="el-icon-plus">添加</el-button>
               </router-link>
               <el-button icon="el-icon-delete" disabled>删除</el-button>
-              <el-button icon="el-icon-refresh">刷新</el-button>
+              <el-button icon="el-icon-refresh" @click="refresh">刷新</el-button>
             </el-col>
             <el-col :span="9">
               <el-input placeholder="请输入搜索关键词" v-model="keyword" class="input-with-select">
@@ -33,13 +33,22 @@
         <div class="list-body">
           <el-table ref="multipleTable" :data="userList" style="width: 100%" @selection-change="handleSelectionChange">
             <el-table-column type="selection" width="55"></el-table-column>
-            <el-table-column label="用户名" width="150">
-              <template slot-scope="scope">{{ scope.row.username }}</template>
+            <el-table-column prop="username" label="用户名" width="130"></el-table-column>
+            <el-table-column prop="gender" label="性别" width="70"></el-table-column>
+            <el-table-column prop="rank" label="会员等级" width="100"></el-table-column>
+            <el-table-column prop="mobile" label="联系方式" width="130"></el-table-column>
+            <el-table-column prop="address" label="地址" width="300"></el-table-column>
+            <el-table-column prop="memo" label="备注"></el-table-column>
+            <el-table-column prop="action" label="操作">
+              <template slot-scope="scope">
+                <router-link :to="{path:'/user-detail', query: {userId: scope.row.id}}">
+                  <el-button type="success" icon="el-icon-search" circle></el-button>
+                </router-link>
+                <router-link :to="{path:'/user-edit', query: {userId: scope.row.id}}">
+                  <el-button type="primary" icon="el-icon-edit-outline" circle></el-button>
+                </router-link>
+              </template>
             </el-table-column>
-            <el-table-column prop="gender" label="性别" width="100"></el-table-column>
-            <el-table-column prop="age" label="年龄" width="100"></el-table-column>
-            <el-table-column prop="mobile" label="联系方式" width="150"></el-table-column>
-            <el-table-column prop="address" label="地址"></el-table-column>
           </el-table>
         </div>
         <div class="list-footer clearfix">
@@ -59,6 +68,8 @@
 </template>
 
 <script>
+import users from '@/json/user.json';
+
 export default {
   data() {
     return {
@@ -66,22 +77,19 @@ export default {
       title: '',
       select: '',
       keyword: '',
-      userList: [
-        {
-          'username': '翟一', 'gender': '女', 'age': 18, 'mobile': '15288886666', 'address': '浙江省杭州市西湖区塘苗路川味泡菜馆'
-        },
-        {
-          'username': '翟二', 'gender': '女', 'age': 16, 'mobile': '13268188866', 'address': '浙江省杭州市拱墅区庆春路海底捞'
-        },
-      ],
+      userList: [],
       currentPage: 1
     }
   },
   mounted() {
     this.menu = this.$route.meta.menu;
     this.title = this.$route.meta.title;
+    this.userList = users.userList;
   },
   methods: {
+    refresh() {
+
+    },
     handleSelectionChange() {
 
     },

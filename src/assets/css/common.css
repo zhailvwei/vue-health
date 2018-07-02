@@ -1,3 +1,12 @@
+/*** font ***/
+.small {
+  font-size: 85%;
+}
+
+.big {
+  font-size: 200%;
+}
+
 /*** el-row ***/
 .el-row {
   margin-bottom: 20px;
@@ -33,12 +42,43 @@
   margin-bottom: 15px;
 }
 
+.list .list-body .el-table .el-button {
+  margin-right: 10px;
+}
+
 .list .list-footer {
   padding: 10px 15px 0 15px;
 }
 
 .list .list-footer .el-pagination {
   float: right;
+}
+
+/*** detail-info-list ***/
+.detail-info-list {
+  padding-left: 70px;
+}
+
+.detail-info-list li {
+  margin-bottom: 15px;
+}
+
+.detail-info-list li:last-child {
+  margin-bottom: 0
+}
+
+.detail-info-list li label {
+  width: 80px;
+  display: inline-block;
+}
+
+.detail-info-list li span {
+  display: inline-block;
+  color: #666666;
+}
+
+.detail-info-footer {
+  padding: 15px 0 0 150px;
 }
 
 /*** clearfix ***/

@@ -1,0 +1,40 @@
+{
+  "userList": [
+    {
+      "id": 1001,
+      "username": "翟微微",
+      "gender": "女",
+      "age": 18,
+      "rank": "铂金会员",
+      "mobile": "15288886666",
+      "email": "zhailvwei@vv.com",
+      "birthdate": "1994-07-26",
+      "address": "浙江省杭州市西湖区塘苗路川味泡菜馆",
+      "memo": "无"
+    },
+    {
+      "id": 1002,
+      "username": "妞妞",
+      "gender": "女",
+      "age": 16,
+      "rank": "钻石会员",
+      "mobile": "13268188866",
+      "email": "zhailvwei2@vv.com",
+      "birthdate": "1994-06-18",
+      "address": "浙江省杭州市拱墅区庆春路海底捞",
+      "memo": "vvvip"
+    },
+    {
+      "id": 1003,
+      "username": "马建国",
+      "gender": "男",
+      "age": 26,
+      "rank": "白银会员",
+      "mobile": "18657129900",
+      "email": "nihaowawoshiniuniu@mjg.com",
+      "birthdate": "1992-08-11",
+      "address": "浙江省杭州市西湖区黄龙万科中心",
+      "memo": "无"
+    }
+  ]
+}

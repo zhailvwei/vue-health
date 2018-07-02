@@ -21,7 +21,8 @@
             <el-col :span="9">
               <el-input placeholder="请输入搜索关键词" v-model="keyword" class="input-with-select">
                 <el-select v-model="select" slot="prepend" placeholder="请选择" style="width: 100px;">
-                  <el-option label="店铺名称" value="1"></el-option>
+                  <el-option label="用户名" value="1"></el-option>
+                  <el-option label="E-mail" value="2"></el-option>
                 </el-select>
                 <el-button slot="append" icon="el-icon-search"></el-button>
               </el-input>
@@ -29,16 +30,24 @@
           </el-row>
         </div>
         <div class="list-body">
-          <el-table ref="multipleTable" :data="shopList" style="width: 100%" @selection-change="handleSelectionChange">
+          <el-table ref="multipleTable" :data="sellerList" style="width: 100%" @selection-change="handleSelectionChange">
             <el-table-column type="selection" width="55"></el-table-column>
-            <el-table-column label="店铺名称" width="150">
+            <el-table-column label="用户名" width="150">
               <template slot-scope="scope">{{ scope.row.shop }}</template>
             </el-table-column>
-            <el-table-column prop="type" label="类型" width="120"></el-table-column>
-            <el-table-column prop="seller" label="商家" width="150"></el-table-column>
-            <el-table-column prop="rank" label="店铺等级" width="120"></el-table-column>
+            <el-table-column prop="email" label="邮箱" width="150"></el-table-column>
             <el-table-column prop="beginDate" label="创建日期" width="150"></el-table-column>
             <el-table-column prop="memo" label="备注"></el-table-column>
+            <el-table-column prop="action" label="操作">
+              <template slot-scope="scope">
+                <router-link to="/seller-detail">
+                  <el-button type="success" icon="el-icon-search" circle></el-button>
+                </router-link>
+                <router-link to="/seller-edit">
+                  <el-button type="primary" icon="el-icon-edit-outline" circle></el-button>
+                </router-link>
+              </template>
+            </el-table-column>
           </el-table>
         </div>
         <div class="list-footer clearfix">
@@ -65,12 +74,12 @@ export default {
       title: '',
       select: '',
       keyword: '',
-      shopList: [
+      sellerList: [
         {
-          'shop': '市民健康大药房', 'type': '自营店铺', 'seller': 'zhai', 'rank': '金牌店铺', 'beginDate': '2016-06-06', 'memo': '无'
+          'shop': '市民健康大药房', 'email': '自营店铺', 'beginDate': '2016-06-06', 'memo': '无'
         },
         {
-          'shop': '同仁堂大药房', 'type': '普通店铺', 'seller': '同仁堂', 'rank': '普通店铺', 'beginDate': '2017-07-07', 'memo': '无'
+          'shop': '同仁堂大药房', 'email': '普通店铺',  'beginDate': '2017-07-07', 'memo': '无'
         },
       ],
       currentPage: 1

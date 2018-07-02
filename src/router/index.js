@@ -34,6 +34,16 @@ export default new Router({
           meta: { title: '添加用户', menu: '用户管理'}
         },
         {
+          path: '/user-edit',
+          component: resolve => require(['../components/page/UserEdit.vue'], resolve),
+          meta: { title: '编辑用户', menu: '用户管理', activePath: 'user-list' }
+        },
+        {
+          path: '/user-detail',
+          component: resolve => require(['../components/page/UserDetail.vue'], resolve),
+          meta: { title: '查看用户', menu: '用户管理', activePath: 'user-list' }
+        },
+        {
           path: '/seller-manage',
           component: resolve => require(['../components/page/SellerManage.vue'], resolve),
           meta: { title: '商家管理', menu: '医药电商管理' }
@@ -41,7 +51,12 @@ export default new Router({
         {
           path: '/seller-add',
           component: resolve => require(['../components/page/SellerAdd.vue'], resolve),
-          meta: { title: '添加商家', menu: '医药电商管理' }
+          meta: { title: '添加商家', menu: '医药电商管理', activePath: 'seller-manage' }
+        },
+        {
+          path: '/seller-edit',
+          component: resolve => require(['../components/page/SellerEdit.vue'], resolve),
+          meta: { title: '编辑商家', menu: '医药电商管理', activePath: 'seller-manage' }
         },
         {
           path: '/shop-list',

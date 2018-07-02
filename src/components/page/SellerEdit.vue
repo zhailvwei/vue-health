@@ -1,5 +1,5 @@
 <template>
-  <div class="user-add">
+  <div class="seller-edit">
     <el-row>
       <el-breadcrumb class="breadcrumb" separator-class="el-icon-arrow-right">
         <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
@@ -23,15 +23,15 @@
               </el-form-item>
               <el-form-item label="店铺类型" prop="type">
                 <el-select v-model="ruleForm.type" placeholder="请选择店铺类型">
-                  <el-option label="普通店铺" value="普通店铺"></el-option>
-                  <el-option label="自营店铺" value="自营店铺"></el-option>
+                  <el-option label="普通店铺" value="normal"></el-option>
+                  <el-option label="自营店铺" value="self"></el-option>
                 </el-select>
               </el-form-item>
               <el-form-item label="店铺等级" prop="rank">
                 <el-select v-model="ruleForm.rank" placeholder="请选择店铺等级">
-                  <el-option label="铜牌店铺" value="铜牌店铺"></el-option>
-                  <el-option label="银牌店铺" value="银牌店铺"></el-option>
-                  <el-option label="金牌店铺" value="金牌店铺"></el-option>
+                  <el-option label="普通店铺" value="rank1"></el-option>
+                  <el-option label="银牌店铺" value="rank2"></el-option>
+                  <el-option label="金牌店铺" value="rank3"></el-option>
                 </el-select>
               </el-form-item>
               <el-form-item label="店铺logo" prop="logo" required>
@@ -168,7 +168,7 @@ export default {
       this.$refs[formName].resetFields();
     },
     back() {
-      this.$router.push('/shop-list');
+      this.$router.push('/seller-manage');
     }
   }
 }
