@@ -69,6 +69,10 @@ export default {
               'index': 'seller-manage',
             },
             {
+              'title': '添加商家',
+              'index': 'seller-add',
+            },
+            {
               'title': '医药电商列表',
               'index': 'shop-list',
             },

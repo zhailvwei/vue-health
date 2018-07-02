@@ -39,6 +39,11 @@ export default new Router({
           meta: { title: '商家管理', menu: '医药电商管理' }
         },
         {
+          path: '/seller-add',
+          component: resolve => require(['../components/page/SellerAdd.vue'], resolve),
+          meta: { title: '添加商家', menu: '医药电商管理' }
+        },
+        {
           path: '/shop-list',
           component: resolve => require(['../components/page/ShopList.vue'], resolve),
           meta: { title: '医药电商列表', menu: '医药电商管理' }
