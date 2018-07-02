@@ -65,6 +65,10 @@ export default {
           'icon': 'iconfont icon-shouye9',
           'sub': [
             {
+              'title': '商家管理',
+              'index': 'seller-manage',
+            },
+            {
               'title': '医药电商列表',
               'index': 'shop-list',
             },
