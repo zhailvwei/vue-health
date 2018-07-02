@@ -61,7 +61,6 @@
               </el-form-item>
               <el-form-item>
                 <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
-                <el-button @click="resetForm('ruleForm')">重置</el-button>
                 <el-button @click="back()">返回</el-button>
               </el-form-item>
             </el-form>
@@ -163,9 +162,6 @@ export default {
           return false;
         }
       });
-    },
-    resetForm(formName) {
-      this.$refs[formName].resetFields();
     },
     back() {
       this.$router.push('/shop-list');

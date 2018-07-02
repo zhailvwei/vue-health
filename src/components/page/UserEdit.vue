@@ -60,21 +60,6 @@ import users from '@/json/user.json';
 
 export default {
   data() {
-    var validatePassword = (rule, value, callback) => {
-      if (value !== '') {
-        if (this.ruleForm.rePassword !== '') {
-          this.$refs.ruleForm.validateField('rePassword');
-        }
-        callback();
-      }
-    };
-    var validateRePassword = (rule, value, callback) => {
-      if (value !== '' && value !== this.ruleForm.password) {
-        callback(new Error('两次输入密码不一致'));
-      } else {
-        callback();
-      }
-    };
     return {
       menu: '',
       title: '',
