@@ -98,7 +98,7 @@ export default {
         },
         {
           'title': '定点医疗机构',
-          'index': 'medical-insititution',
+          'index': 'medical-institution',
           'icon': 'iconfont icon-yiliao'
         },
         {

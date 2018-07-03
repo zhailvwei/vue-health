@@ -84,9 +84,14 @@ export default new Router({
           meta: { title: '药品追溯', menu: '医疗药品管理' }
         },
         {
-          path: '/medical-insititution',
-          component: resolve => require(['../components/page/MedicalInsititution.vue'], resolve),
+          path: '/medical-institution',
+          component: resolve => require(['../components/page/MedicalInstitution.vue'], resolve),
           meta: { title: '定点医疗机构' }
+        },
+        {
+          path: '/medical-insititution-detail',
+          component: resolve => require(['../components/page/MedicalInstitutionDetail.vue'], resolve),
+          meta: { title: '医疗机构定位', menu: '定点医疗机构', activePath: 'medical-insititution' }
         },
         {
           path: '/admin-manage',
