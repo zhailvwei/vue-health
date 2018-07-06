@@ -15,7 +15,7 @@
               <router-link to="/user-add">
                 <el-button class="btn-add" icon="el-icon-plus">添加</el-button>
               </router-link>
-              <el-button icon="el-icon-delete" :disabled="deleteItem">删除</el-button>
+              <el-button icon="el-icon-delete" :disabled="deleteItem" @click="handleDelete">删除</el-button>
               <el-button icon="el-icon-refresh" @click="refresh">刷新</el-button>
             </el-col>
             <el-col :span="9">
@@ -31,7 +31,8 @@
           </el-row>
         </div>
         <div class="list-body">
-          <el-table ref="multipleTable" :data="userList" style="width: 100%" @selection-change="handleSelectionChange">
+          <el-table ref="multipleTable" :data="userList" style="width: 100%"
+            @selection-change="handleSelectionChange">
             <el-table-column type="selection" width="55"></el-table-column>
             <el-table-column prop="username" label="用户名" width="130"></el-table-column>
             <el-table-column prop="gender" label="性别" width="70"></el-table-column>
@@ -53,8 +54,6 @@
         </div>
         <div class="list-footer clearfix">
           <el-pagination
-            @size-change="handleSizeChange"
-            @current-change="handleCurrentChange"
             :current-page.sync="currentPage"
             :page-sizes="[10, 20, 30, 40]"
             :page-size="10"
@@ -68,8 +67,6 @@
 </template>
 
 <script>
-import users from '@/json/user.json';
-
 export default {
   data() {
     return {
@@ -79,31 +76,53 @@ export default {
       keyword: '',
       deleteItem: true,
       userList: [],
-      currentPage: 1
+      ids: [],
+      currentPage: 1,
     }
   },
   mounted() {
     this.menu = this.$route.meta.menu;
     this.title = this.$route.meta.title;
-    this.userList = users.userList;
+    this.getUserList();
   },
   methods: {
+    getUserList() {
+      const that = this;
+      this.$axios.get('http://localhost:3000/api/user/users')
+      .then(function (res) {
+        that.userList = res.data.data;
+      })
+      .catch(function (error) {
+        console.log(`error: ${error}`);
+      });
+    },
     refresh() {
-      
+      this.getUserList();
     },
     handleSelectionChange(val) {
-      console.log(val)
       if (val.length > 0) {
         this.deleteItem = false;
+        let ids = val.map(item => {
+          return item.id;
+        });
+        this.ids = ids;
       } else {
         this.deleteItem = true;
       }
     },
-    handleSizeChange() {
-      
-    },
-    handleCurrentChange() {
-      
+    handleDelete() {
+      const that = this;
+      let data = {
+        id: this.ids
+      };
+      this.$axios.post('http://localhost:3000/api/user/delete', data)
+      .then(function (res) {
+        console.log(res);
+        that.getUserList();
+      })
+      .catch(function (error) {
+        console.log(`error: ${error}`);
+      });
     }
   }
 }

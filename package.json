@@ -1,26 +1,42 @@
 {
-  "name": "management-system",
+  "name": "vue-health-system",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "mock": "nodemon app.js"
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-register": "^6.26.0",
+    "bluebird": "^3.5.1",
     "element-ui": "^2.4.0",
     "html2canvas": "^1.0.0-alpha.12",
+    "koa": "^2.5.1",
+    "koa-bodyparser": "^4.2.1",
+    "koa-logger": "^3.2.0",
+    "koa-router": "^7.4.0",
+    "koa-session": "^5.8.1",
+    "koa2-cors": "^2.0.5",
+    "loadsh": "^1.0.1",
+    "mockjs": "^1.0.1-beta3",
+    "mongoose": "^5.2.0",
+    "uuid": "^3.3.2",
     "vue": "^2.5.16",
     "vue-happy-scroll": "^2.0.1",
     "vue-router": "^3.0.1",
     "vue-schart": "^1.0.0",
-    "webpack": "^4.10.2"
+    "webpack": "^4.10.2",
+    "xss": "^1.0.3"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.0-beta.15",
     "@vue/cli-plugin-eslint": "^3.0.0-beta.15",
     "@vue/cli-service": "^3.0.0-beta.15",
+    "nodemon": "^1.17.5",
     "vue-template-compiler": "^2.5.16"
   },
   "eslintConfig": {

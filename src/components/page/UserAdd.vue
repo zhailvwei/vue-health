@@ -46,6 +46,9 @@
               <el-form-item label="E-mail" prop="email">
                 <el-input v-model="ruleForm.email" auto-complete="off"></el-input>
               </el-form-item>
+              <el-form-item label="地址">
+                <el-input v-model="ruleForm.address" auto-complete="off"></el-input>
+              </el-form-item>
               <el-form-item label="备注">
                 <el-input type="textarea" v-model="ruleForm.memo" rows="5"></el-input>
               </el-form-item>
@@ -91,6 +94,7 @@ export default {
         birthdate: '',
         mobile: '',
         email: '',
+        address: '',
         memo: ''
       },
       rules: {
@@ -122,7 +126,7 @@ export default {
         ],
         email: [
           { required: true, message: '请输入用户邮箱', trigger: 'blur' },
-          { pattern: /^[^\s]+\.[^\s]$/, message: '邮箱格式错误', trigger: 'blur' }
+          { pattern: /^[^\s]+@[^\s]+\.[^\s]+$/, message: '邮箱格式错误', trigger: 'blur' }
         ]
       }
     }
@@ -133,9 +137,45 @@ export default {
   },
   methods: {
     submitForm(formName) {
+      const that = this;
+
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('submit!');
+          const date = this.ruleForm.birthdate;
+          const year = date.getFullYear();
+          const month = date.getMonth() + 1 > 10 ? date.getMonth() : `0${date.getMonth() + 1}`;
+          const day = date.getDate();
+          let data = {
+            username: this.ruleForm.username,
+            gender: this.ruleForm.gender,
+            rank: this.ruleForm.rank,
+            birthdate: `${year}-${month}-${day}`,
+            mobile: this.ruleForm.mobile,
+            email: this.ruleForm.email,
+            address: this.ruleForm.address
+          };
+          this.$axios.post('http://localhost:3000/api/user/add', data)
+          .then(function (res) {
+            if (res.statusText === 'OK' && res.data.success) {
+              that.$message({
+                message: '操作成功！',
+                type: 'success',
+                duration: 3000,
+                onClose: ()=> {
+                  that.$router.push('/user-list');
+                }
+              });
+            } else {
+              that.$message({
+                message: '操作失败！',
+                type: 'error',
+                duration: 3000
+              })
+            }
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
         } else {
           return false;
         }

@@ -56,8 +56,6 @@
 </template>
 
 <script>
-import users from '@/json/user.json';
-
 export default {
   data() {
     return {
@@ -101,14 +99,23 @@ export default {
   mounted() {
     this.menu = this.$route.meta.menu;
     this.title = this.$route.meta.title;
-
-    let userList = users.userList;
-    let user = userList.filter((item)=>{
-      return this.userId == item.id;
-    });
-    this.ruleForm = user[0];
+    this.getUserInfo();
   },
   methods: {
+    getUserInfo() {
+      const that = this;
+      this.$axios.get('http://localhost:3000/api/user/user', {
+        params: {
+          id: that.userId
+        }
+      })
+      .then(function (res) {
+        console.log(res)
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    },
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
