@@ -21,11 +21,11 @@
             <el-col :span="9">
               <el-input placeholder="请输入搜索关键词" v-model="keyword" class="input-with-select">
                 <el-select v-model="select" slot="prepend" placeholder="请选择" style="width: 100px;">
-                  <el-option label="用户名" value="1"></el-option>
-                  <el-option label="性别" value="2"></el-option>
-                  <el-option label="年龄" value="3"></el-option>
+                  <el-option label="用户名" value="username"></el-option>
+                  <el-option label="性别" value="gender"></el-option>
+                  <el-option label="会员等级" value="rank"></el-option>
                 </el-select>
-                <el-button slot="append" icon="el-icon-search"></el-button>
+                <el-button slot="append" icon="el-icon-search" @click="handleFilterSearch"></el-button>
               </el-input>
             </el-col>
           </el-row>
@@ -88,7 +88,7 @@ export default {
   methods: {
     getUserList() {
       const that = this;
-      this.$axios.get('http://localhost:3000/api/user/users')
+      this.$axios.post('http://localhost:3000/api/user/users')
       .then(function (res) {
         that.userList = res.data.data;
       })
@@ -98,6 +98,22 @@ export default {
     },
     refresh() {
       this.getUserList();
+    },
+    handleFilterSearch() {
+      if (this.select !== '' && this.keyword !== '') {
+        const that = this;
+        let data = {
+          select: this.select,
+          keyword: this.keyword
+        }
+        this.$axios.post('http://localhost:3000/api/user/users', data)
+        .then(function (res) {
+          that.userList = res.data.data;
+        })
+        .catch(function (error) {
+          console.log(`error: ${error}`);
+        });
+      }
     },
     handleSelectionChange(val) {
       if (val.length > 0) {
@@ -121,7 +137,7 @@ export default {
         type: 'warning'
       }).then(() => {
         this.$axios.post('http://localhost:3000/api/user/delete', data)
-        .then(function (res) {
+        .then(function () {
           that.getUserList();
           that.$message({
             message: '操作成功！',
