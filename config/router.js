@@ -7,7 +7,7 @@ module.exports = function () {
   });
 
   router.get('/user/users', User.users);
-  router.get('/user/user', User.user);
+  router.post('/user/user', User.user);
   router.post('/user/add', User.addUser);
   router.post('/user/delete', User.deleteUser);
   return router;

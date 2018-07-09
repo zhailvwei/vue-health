@@ -22,17 +22,15 @@ exports.findFilterUsers = async (params) => {
 
 /* 查找单个用户 */
 exports.findUser = async (params) => {
-  let query = User.find({
-    id: params.id
-  });
-  let res = {};
-  await query.exec(function (err, tUser) {
-    if (err) {
-      res = '没有该用户';
-    } else {
-      res = tUser[0];
-    }
-  });
+  let res;
+  try {
+    res = await User.find({
+      id: params.id
+    });
+  } catch (error) {
+    res = '没有该用户'
+  }
+
   return res;
 };
 
@@ -62,9 +60,10 @@ exports.updateUser = async (user) => {
 
 /* 删除用户 */
 exports.deleteUser = async ({ids}) => {
+  debugger;
   let flag = false;
   console.log('flag==========>' + flag);
-  await User.remove({ids}, function (err) {
+  await User.remove({id: {$in: ids.split(',')}}, function (err) {
     if (err) {
       flag = false
     } else {

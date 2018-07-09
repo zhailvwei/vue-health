@@ -160,7 +160,7 @@ export default {
               that.$message({
                 message: '操作成功！',
                 type: 'success',
-                duration: 3000,
+                duration: 1500,
                 onClose: ()=> {
                   that.$router.push('/user-list');
                 }
@@ -169,7 +169,7 @@ export default {
               that.$message({
                 message: '操作失败！',
                 type: 'error',
-                duration: 3000
+                duration: 1500
               })
             }
           })

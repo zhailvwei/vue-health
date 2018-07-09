@@ -25,10 +25,6 @@
                   <span>{{userInfo.gender}}</span>
                 </li>
                 <li>
-                  <label>年龄</label>
-                  <span>{{userInfo.age}}</span>
-                </li>
-                <li>
                   <label>联系方式</label>
                   <span>{{userInfo.mobile}}</span>
                 </li>
@@ -75,7 +71,6 @@
 </template>
 
 <script>
-import users from '@/json/user.json';
 import Schart from 'vue-schart';
 
 export default {
@@ -138,14 +133,32 @@ export default {
   mounted() {
     this.menu = this.$route.meta.menu;
     this.title = this.$route.meta.title;
-
-    let userList = users.userList;
-    let user = userList.filter((item)=>{
-      return this.userId == item.id;
-    });
-    this.userInfo = user[0];
+    this.getUserInfo();
   },
   methods: {
+    getUserInfo() {
+      const that = this;
+      this.$axios.post('http://localhost:3000/api/user/user', {
+          id: that.userId
+        })
+      .then(function (res) {
+        if (res.data.success & res.data.data.length > 0) {
+          that.userInfo = res.data.data[0];
+        } else {
+          that.$message({
+            message: '没有该用户！',
+            type: 'error',
+            duration: 1500,
+            onClose: ()=> {
+              that.$router.push('/user-list');
+            }
+          });
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    },
     back() {
       this.$router.push('/user-list');
     }

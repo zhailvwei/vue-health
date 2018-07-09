@@ -40,6 +40,9 @@
               <el-form-item label="E-mail" prop="email">
                 <el-input v-model="ruleForm.email" auto-complete="off"></el-input>
               </el-form-item>
+              <el-form-item label="地址">
+                <el-input v-model="ruleForm.address" auto-complete="off"></el-input>
+              </el-form-item>
               <el-form-item label="备注">
                 <el-input type="textarea" v-model="ruleForm.memo" rows="5"></el-input>
               </el-form-item>
@@ -69,6 +72,7 @@ export default {
         birthdate: '',
         mobile: '',
         email: '',
+        address: '',
         memo: ''
       },
       rules: {
@@ -104,13 +108,32 @@ export default {
   methods: {
     getUserInfo() {
       const that = this;
-      this.$axios.get('http://localhost:3000/api/user/user', {
-        params: {
+      this.$axios.post('http://localhost:3000/api/user/user', {
           id: that.userId
-        }
-      })
+        })
       .then(function (res) {
-        console.log(res)
+        if (res.data.success & res.data.data.length > 0) {
+          const userInfo = res.data.data[0];
+          that.ruleForm = {
+            username: userInfo.username,
+            gender: userInfo.gender,
+            rank: userInfo.rank,
+            birthdate: userInfo.birthdate,
+            mobile: userInfo.mobile,
+            email: userInfo.email,
+            address: userInfo.address,
+            memo: userInfo.memo
+          }
+        } else {
+          that.$message({
+            message: '没有该用户！',
+            type: 'error',
+            duration: 1500,
+            onClose: ()=> {
+              that.$router.push('/user-list');
+            }
+          });
+        }
       })
       .catch(function (error) {
         console.log(error);

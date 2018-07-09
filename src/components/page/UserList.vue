@@ -37,8 +37,8 @@
             <el-table-column prop="username" label="用户名" width="130"></el-table-column>
             <el-table-column prop="gender" label="性别" width="70"></el-table-column>
             <el-table-column prop="rank" label="会员等级" width="100"></el-table-column>
-            <el-table-column prop="mobile" label="联系方式" width="130"></el-table-column>
-            <el-table-column prop="address" label="地址" width="300"></el-table-column>
+            <el-table-column prop="mobile" label="联系方式" width="120"></el-table-column>
+            <el-table-column prop="address" label="地址" width="260"></el-table-column>
             <el-table-column prop="memo" label="备注"></el-table-column>
             <el-table-column prop="action" label="操作">
               <template slot-scope="scope">
@@ -113,15 +113,30 @@ export default {
     handleDelete() {
       const that = this;
       let data = {
-        id: this.ids
+        ids: this.ids
       };
-      this.$axios.post('http://localhost:3000/api/user/delete', data)
-      .then(function (res) {
-        console.log(res);
-        that.getUserList();
-      })
-      .catch(function (error) {
-        console.log(`error: ${error}`);
+      this.$confirm('您确认要删除吗?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$axios.post('http://localhost:3000/api/user/delete', data)
+        .then(function (res) {
+          that.getUserList();
+          that.$message({
+            message: '操作成功！',
+            type: 'success',
+            duration: 1500
+          });
+        })
+        .catch(function (error) {
+          console.log(`error: ${error}`);
+        });
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        });          
       });
     }
   }

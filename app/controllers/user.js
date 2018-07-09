@@ -25,7 +25,7 @@ exports.users = async (ctx, next) => {
 /* 单用户 */
 exports.user = async (ctx, next) => {
   let data = await userHelper.findUser(ctx.request.body);
-
+console.log(ctx.request.body)
   ctx.body = {
     success: true,
     data
