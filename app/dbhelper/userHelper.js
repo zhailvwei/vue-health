@@ -12,10 +12,12 @@ exports.findAllUsers = async () => {
 
 /* 查找特定用户 */
 exports.findFilterUsers = async (params) => {
-  let nameReg = new RegExp(params.username, 'i');
+  const property = params.select;
+  const pattern = new RegExp(params.keyword, 'i');
+  
   return await User.find({
-    username: {
-      $regex: nameReg
+    [property]: {
+      $regex: pattern
     }
   });
 };

@@ -13,6 +13,7 @@ exports.users = async (ctx, next) => {
   if (isEmpty(ctx.request.body)) {
     data = await userHelper.findAllUsers()
   } else {
+    console.log(ctx.request.body)
     data = await userHelper.findFilterUsers(ctx.request.body)
   }
 
@@ -25,7 +26,6 @@ exports.users = async (ctx, next) => {
 /* 单用户 */
 exports.user = async (ctx, next) => {
   let data = await userHelper.findUser(ctx.request.body);
-console.log(ctx.request.body)
   ctx.body = {
     success: true,
     data
