@@ -9,14 +9,16 @@ const userHelper = require('../dbhelper/userHelper');
 
 /* 多用户 */
 exports.users = async (ctx, next) => {
-  let data;
-  if (isEmpty(ctx.request.body)) {
-    data = await userHelper.findAllUsers()
-  } else {
-    console.log(ctx.request.body)
-    data = await userHelper.findFilterUsers(ctx.request.body)
+  let data = await userHelper.findAllUsers(ctx.request.body)
+  ctx.body = {
+    success: true,
+    data
   }
+};
 
+/* 特定用户模糊查询 */
+exports.searchUsers = async (ctx, next) => {
+  let data = await userHelper.findFilterUsers(ctx.request.body);
   ctx.body = {
     success: true,
     data

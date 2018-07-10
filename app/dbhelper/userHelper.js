@@ -4,22 +4,34 @@ let mongoose = require('mongoose');
 let User = mongoose.model('User');
 
 /* 查找用户 */
-exports.findAllUsers = async () => {
-  let res = await User.find();
+exports.findAllUsers = async (params) => {
+  let pageSize = params.pageSize;
+  let currentPage = params.currentPage;
 
-  return res;
+  let onePageUsers = await User.find({}).sort({"_id": 1}).skip((currentPage-1) * pageSize).limit(pageSize);
+  let userTotalCount = await User.count();
+  
+  return {
+    onePageUsers: onePageUsers,
+    userTotalCount: userTotalCount
+  };
 };
 
 /* 查找特定用户 */
 exports.findFilterUsers = async (params) => {
-  const property = params.select;
-  const pattern = new RegExp(params.keyword, 'i');
-  
-  return await User.find({
-    [property]: {
-      $regex: pattern
-    }
-  });
+  let pageSize = params.pageSize;
+  let currentPage = params.currentPage;
+  let property = params.select;
+  let pattern = new RegExp(params.keyword, 'i');
+
+  let onePageFilterUsers = await User.find({[property]: {$regex: pattern}}).sort({"_id": 1}).skip((currentPage-1) * pageSize).limit(pageSize);
+  let filterUserTotalCount = await User.find({[property]: {$regex: pattern}}).count();
+
+  console.log(filterUserTotalCount)
+  return {
+    onePageFilterUsers: onePageFilterUsers,
+    filterUserTotalCount: filterUserTotalCount
+  }
 };
 
 /* 查找单个用户 */
@@ -62,7 +74,6 @@ exports.updateUser = async (user) => {
 
 /* 删除用户 */
 exports.deleteUser = async ({ids}) => {
-  debugger;
   let flag = false;
   console.log('flag==========>' + flag);
   await User.remove({id: {$in: ids.split(',')}}, function (err) {
