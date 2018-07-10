@@ -54,11 +54,13 @@
         </div>
         <div class="list-footer clearfix">
           <el-pagination
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
             :current-page.sync="currentPage"
-            :page-sizes="[10, 20, 30, 40]"
-            :page-size="10"
+            :page-sizes="pageSizes"
+            :page-size="pageSize"
             layout="sizes, prev, pager, next"
-            :total="26">
+            :total="total">
           </el-pagination>
         </div>
       </div>
@@ -74,10 +76,14 @@ export default {
       title: '',
       select: '',
       keyword: '',
+      searchStatus: false,
       deleteItem: true,
       userList: [],
       ids: [],
       currentPage: 1,
+      pageSize: 5,
+      pageSizes: [5, 10, 15],
+      total: 0,
     }
   },
   mounted() {
@@ -86,33 +92,53 @@ export default {
     this.getUserList();
   },
   methods: {
+    // 获取用户列表
     getUserList() {
       const that = this;
-      this.$axios.post('http://localhost:3000/api/user/users')
+      let data = {
+        pageSize: this.pageSize,
+        currentPage: this.currentPage
+      };
+      if (this.searchStatus === false) {
+        this.$axios.post('http://localhost:3000/api/user/users', data)
+        .then(function (res) {
+          that.userList = res.data.data.onePageUsers;
+          that.total = res.data.data.userTotalCount;
+        })
+        .catch(function (error) {
+          console.log(`error: ${error}`);
+        });
+      } else {
+        this.getFilterUserList();
+      }
+    },
+    // 获取条件查询用户列表
+    getFilterUserList() {
+      const that = this;
+      let data = {
+        pageSize: this.pageSize,
+        currentPage: this.currentPage,
+        select: this.select,
+        keyword: this.keyword
+      }
+      this.$axios.post('http://localhost:3000/api/user/search', data)
       .then(function (res) {
-        that.userList = res.data.data;
+        that.searchStatus = true;
+        that.userList = res.data.data.onePageFilterUsers;
+        that.total = res.data.data.filterUserTotalCount;
       })
       .catch(function (error) {
         console.log(`error: ${error}`);
       });
     },
     refresh() {
+      this.searchStatus = false;
       this.getUserList();
     },
+    // 条件查询
     handleFilterSearch() {
       if (this.select !== '' && this.keyword !== '') {
-        const that = this;
-        let data = {
-          select: this.select,
-          keyword: this.keyword
-        }
-        this.$axios.post('http://localhost:3000/api/user/users', data)
-        .then(function (res) {
-          that.userList = res.data.data;
-        })
-        .catch(function (error) {
-          console.log(`error: ${error}`);
-        });
+        this.getFilterUserList();
       }
     },
     handleSelectionChange(val) {
@@ -139,6 +165,11 @@ export default {
         this.$axios.post('http://localhost:3000/api/user/delete', data)
         .then(function () {
           that.getUserList();
+          let currentUserListLength = that.userList.length - 1;
+          if (currentUserListLength === 0 && that.currentPage !== 1) {
+            that.currentPage -= 1;
+            that.getUserList();
+          }
           that.$message({
             message: '操作成功！',
             type: 'success',
@@ -154,6 +185,14 @@ export default {
           message: '已取消删除'
         });          
       });
+    },
+    handleSizeChange(val) {
+      this.pageSize = val;
+      this.getUserList();
+    },
+    handleCurrentChange(val) {
+      this.currentPage = val;
+      this.getUserList();
     }
   }
 }
